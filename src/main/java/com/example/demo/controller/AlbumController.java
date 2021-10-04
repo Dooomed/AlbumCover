@@ -7,6 +7,8 @@ import com.example.demo.service.AlbumService;
 import com.example.demo.service.MusicianService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/album")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin()
 public class AlbumController {
 
     @Autowired
@@ -30,7 +32,7 @@ public class AlbumController {
         return new ResponseEntity<>(albumService.getAlbumsByMusicianId(id), HttpStatus.OK);
     }
 
-    @PostMapping("/album/save")
+    @PostMapping("/save")
     public ResponseEntity<Album> saveAlbum(@RequestBody AlbumDto albumDto) {
 
         List<SongDto> songsDto = albumDto.getSongs();
@@ -46,7 +48,7 @@ public class AlbumController {
             songs.add(new Song(
                     songDto.name, songDto.songUrl, musician
             ));
-        };
+        }
 
         Album album = new Album(albumDto.name, musician, songs, albumDto.coverUrl);
 
@@ -57,6 +59,7 @@ public class AlbumController {
 
 
     @Data
+    @NoArgsConstructor
     public static class AlbumDto {
 
         private Long id;
@@ -65,20 +68,11 @@ public class AlbumController {
         private List<SongDto> songs;
         private String coverUrl;
 
-        public AlbumDto() {
-
-        }
-
-        public AlbumDto(String name, Long musicianId, List<SongDto> songs, String coverUrl) {
-            this.name = name;
-            this.musicianId = musicianId;
-            this.songs = songs;
-            this.coverUrl = coverUrl;
-        }
     }
 
     @Data
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class SongDto {
 
         private Long id;
@@ -87,15 +81,5 @@ public class AlbumController {
         private Long albumId;
         private Long musicianId;
 
-        public SongDto(String name, String songUrl, Long albumId, Long musicianId) {
-            this.name = name;
-            this.songUrl = songUrl;
-            this.albumId = albumId;
-            this.musicianId = musicianId;
-        }
-
-        public SongDto() {
-
-        }
     }
 }

@@ -22,7 +22,7 @@ public class Song {
 	
 	private String songUrl;
 	
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = true, cascade = CascadeType.ALL)
 	private Album album;
 
 	@ManyToOne(optional = false)
