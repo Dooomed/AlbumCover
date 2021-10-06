@@ -13,10 +13,10 @@ class MusicianRepositoryTest {
     @Autowired
     private MusicianRepository musicianRepository;
 
-    @Test
+/*    @Test
     public void saveMusician(){
         Musician musician = new Musician(
                 "Drake", "Rap artist", "https://upload.wikimedia.org/wikipedia/commons/1/15/Drake_at_The_Carter_Effect_2017_%2836818935200%29_%28cropped%29.jpg");
         this.musicianRepository.save(musician);
-    }
+    }*/
 }

@@ -28,7 +28,7 @@ public class Album {
 
 	private LocalDateTime releaseDate;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private List<Song> songList;
 	
 	private String coverUrl;

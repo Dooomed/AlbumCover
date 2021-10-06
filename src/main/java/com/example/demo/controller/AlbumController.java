@@ -57,9 +57,20 @@ public class AlbumController {
         return new ResponseEntity<>(album, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AlbumDto> findAlbumById(@PathVariable("id") Long id) {
+        Album album = this.albumService.findAlbumById(id).orElseThrow(
+                () -> new IllegalStateException("Album not found!"));
+        List<SongDto> songDtoList = new ArrayList<>();
+        album.getSongList().forEach(e -> songDtoList.add(new SongDto(e.getId(), e.getName(), e.getSongUrl(), album.getId(), e.getMusician().getId())));
+        AlbumDto albumDto = new AlbumDto(album.getId(), album.getName(), album.getMusician().getId(), songDtoList, album.getCoverUrl());
+
+        return new ResponseEntity<>(albumDto, HttpStatus.OK);
+    }
 
     @Data
     @NoArgsConstructor
+    @AllArgsConstructor
     public static class AlbumDto {
 
         private Long id;
@@ -67,7 +78,6 @@ public class AlbumController {
         private Long musicianId;
         private List<SongDto> songs;
         private String coverUrl;
-
     }
 
     @Data
